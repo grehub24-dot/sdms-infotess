@@ -13,7 +13,7 @@ function db(): PDO {
 
     $host = env('DB_HOST', '127.0.0.1');
     $port = env('DB_PORT', '3306');
-    $name = env('DB_NAME', 'dsdmras');
+    $name = env('DB_NAME', 'infotess_sdms');
     $user = env('DB_USER', 'root');
     $pass = env('DB_PASS', '');
 
