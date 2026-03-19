@@ -270,7 +270,7 @@ class ReceiptGenerator {
 
                 <div class='footer-row'>
                     <div class='qr-section'>
-                        <img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" . urlencode("http://localhost/Group Project/Infotess/verify_public.php?receipt=" . $receiptNumber) . "' class='qr-code' />
+                        <img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" . urlencode("http://localhost/Infotess/verify_public.php?receipt=" . $receiptNumber) . "' class='qr-code' />
                         <p style='font-size: 12px; margin: 0;'>Scan to verify: $receiptNumber</p>
                     </div>
                     <div class='signature-section'>

@@ -7,7 +7,7 @@
                     <p>The Information Technology Students’ Society (INFOTESS) of AAMUSTED is dedicated to promoting technology education and student welfare.</p>
                 </div>
                 <div class="footer-section">
-                    <?php $base_url = '/Group Project/infotess/'; ?>
+                    <?php $base_url = '/Infotess/'; ?>
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="<?php echo $base_url; ?>index.php">Home</a></li>

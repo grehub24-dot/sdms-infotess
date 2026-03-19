@@ -6,7 +6,7 @@
     <title>INFOTESS - SDMS</title>
     <!-- CSS -->
     <?php
-    $base_url = '/Group Project/infotess/';
+    $base_url = '/Infotess/';
     ?>
     <link rel="stylesheet" href="<?php echo $base_url; ?>css/style.css">
     <!-- FontAwesome -->

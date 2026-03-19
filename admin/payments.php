@@ -186,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                 </div>
                                 
                                 <div style='text-align: center; margin-top: 20px;'>
-                                    <img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" . urlencode("http://localhost/Group Project/Infotess/verify_public.php?receipt=" . $receipt_number) . "' alt='QR Code' style='width: 100px; height: 100px; margin-bottom: 10px;' />
+                                    <img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" . urlencode("http://localhost/Infotess/verify_public.php?receipt=" . $receipt_number) . "' alt='QR Code' style='width: 100px; height: 100px; margin-bottom: 10px;' />
                                     <br>
                                     <div class='paid-badge'>✓ PAID</div>
                                 </div>
