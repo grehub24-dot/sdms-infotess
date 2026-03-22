@@ -153,7 +153,7 @@ function extract_fasme_staff_urls(string $listingUrl): array {
     $xp = new DOMXPath($dom);
 
     $urls = [];
-    $nodes = $xp->query("//a[starts-with(@href,'https://aamusted.edu.gh/staff/')]");
+    $nodes = $xp->query("//a[starts-with(@href,'https://usted.edu.gh/staff/')]");
     if ($nodes) {
         for ($i = 0; $i < $nodes->length; $i++) {
             $href = (string)$nodes->item($i)->getAttribute('href');
@@ -170,7 +170,7 @@ function extract_fasme_staff_urls(string $listingUrl): array {
 }
 
 try {
-    $listingUrl = 'https://aamusted.edu.gh/fasme/staff/';
+    $listingUrl = 'https://usted.edu.gh/fasme/staff/';
     $urls = extract_fasme_staff_urls($listingUrl);
 
     $urls = array_slice($urls, 0, $limit);

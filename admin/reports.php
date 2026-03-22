@@ -98,7 +98,7 @@ if (isset($_GET['export']) && $_GET['export'] === 'csv' && $data) {
                         <option value="payments_per_year" <?php echo $report_type == 'payments_per_year' ? 'selected' : ''; ?>>Payments per Academic Year</option>
                         <option value="payments_per_semester" <?php echo $report_type == 'payments_per_semester' ? 'selected' : ''; ?>>Payments per Semester</option>
                     </select>
-                    <button type="submit" class="btn-primary">View Report</button>
+                    <button type="submit" class="btn-admin-action"><i class="fas fa-chart-line"></i> View Report</button>
                 </form>
             </div>
 

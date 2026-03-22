@@ -1,6 +1,5 @@
 <?php
 require_once '../includes/db.php';
-require_once '../includes/header.php';
 require_once '../includes/SMSHelper.php';
 
 // Check if logged in and is student
@@ -59,33 +58,139 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<div class="section" style="padding: 60px 20px; min-height: 60vh; display: flex; align-items: center; justify-content: center; background-color: #f9f9f9;">
-    <div class="form-container" style="max-width: 500px; width: 100%; margin: 0 auto; background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        <h2 class="section-title" style="text-align: center; margin-bottom: 10px; color: #333;">Reset Your Password</h2>
-        <p style="text-align: center; margin-bottom: 30px; color: #666; font-size: 14px;">You are using a temporal password. Please set a new password to continue.</p>
-        
+<?php require_once '../includes/header.php'; ?>
+
+<style>
+    .reset-wrap {
+        background: linear-gradient(135deg, rgba(0, 51, 102, 0.06), rgba(255, 204, 0, 0.12));
+        min-height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 50px 16px;
+    }
+    .reset-card {
+        width: 100%;
+        max-width: 520px;
+        margin: 0;
+        border-radius: 14px;
+        box-shadow: 0 14px 35px rgba(0, 0, 0, 0.14);
+        border-top: 4px solid var(--secondary-color);
+    }
+    .reset-title {
+        margin-bottom: 10px;
+    }
+    .reset-note {
+        text-align: center;
+        margin-bottom: 24px;
+        color: #555;
+        font-size: 0.95rem;
+    }
+    .reset-group {
+        margin-bottom: 18px;
+    }
+    .reset-group label {
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #213547;
+    }
+    .reset-group .form-control {
+        height: 46px;
+    }
+    .password-field {
+        position: relative;
+    }
+    .password-field .form-control {
+        padding-right: 86px;
+    }
+    .password-toggle {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        border: 1px solid #d0d7de;
+        background: #f8fafc;
+        color: #1f2937;
+        border-radius: 6px;
+        padding: 5px 10px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        line-height: 1;
+    }
+    .reset-group .form-control:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.12);
+    }
+    .reset-btn {
+        margin-top: 8px;
+        height: 48px;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+    .reset-alert {
+        margin-bottom: 18px;
+    }
+    @media (max-width: 576px) {
+        .reset-wrap {
+            padding: 30px 14px;
+        }
+        .reset-card {
+            padding: 28px 20px;
+        }
+    }
+</style>
+
+<div class="section reset-wrap">
+    <div class="form-container reset-card">
+        <h2 class="section-title reset-title">Reset Your Password</h2>
+        <p class="reset-note">You are using a temporary password. Please set a new password to continue.</p>
+
         <?php if ($error): ?>
-            <div class="alert alert-danger" style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 4px; margin-bottom: 20px; font-size: 14px;"><?php echo $error; ?></div>
+            <div class="alert alert-danger reset-alert"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
-        
+
         <?php if ($success): ?>
-            <div class="alert alert-success" style="background-color: #d4edda; color: #155724; padding: 10px; border-radius: 4px; margin-bottom: 20px; font-size: 14px;"><?php echo $success; ?></div>
+            <div class="alert alert-success reset-alert"><?php echo htmlspecialchars($success); ?></div>
         <?php endif; ?>
-        
+
         <form action="password-reset.php" method="POST">
-            <div class="form-group" style="margin-bottom: 20px;">
-                <label for="new_password" style="display: block; margin-bottom: 8px; font-weight: 600; color: #444;">New Password</label>
-                <input type="password" name="new_password" id="new_password" class="form-control" required placeholder="Enter New Password" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+            <div class="form-group reset-group">
+                <label for="new_password">New Password</label>
+                <div class="password-field">
+                    <input type="password" name="new_password" id="new_password" class="form-control" required placeholder="Enter New Password">
+                    <button type="button" class="password-toggle" data-target="new_password" aria-label="Toggle new password visibility">View</button>
+                </div>
             </div>
-            
-            <div class="form-group" style="margin-bottom: 25px;">
-                <label for="confirm_password" style="display: block; margin-bottom: 8px; font-weight: 600; color: #444;">Confirm Password</label>
-                <input type="password" name="confirm_password" id="confirm_password" class="form-control" required placeholder="Confirm New Password" style="width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px;">
+
+            <div class="form-group reset-group">
+                <label for="confirm_password">Confirm Password</label>
+                <div class="password-field">
+                    <input type="password" name="confirm_password" id="confirm_password" class="form-control" required placeholder="Confirm New Password">
+                    <button type="button" class="password-toggle" data-target="confirm_password" aria-label="Toggle confirm password visibility">View</button>
+                </div>
             </div>
-            
-            <button type="submit" class="btn-submit" style="width: 100%; padding: 14px; background-color: var(--primary-color, #003366); color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s;">Reset Password</button>
+
+            <button type="submit" class="btn-submit reset-btn">Reset Password</button>
         </form>
     </div>
 </div>
+
+<script>
+    document.querySelectorAll('.password-toggle').forEach(function(button) {
+        button.addEventListener('click', function() {
+            const targetId = button.getAttribute('data-target');
+            const input = document.getElementById(targetId);
+            if (!input) {
+                return;
+            }
+            const show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            button.textContent = show ? 'Hide' : 'View';
+            button.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+        });
+    });
+</script>
 
 <?php require_once '../includes/footer.php'; ?>

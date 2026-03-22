@@ -87,7 +87,7 @@ $status_text = $outstanding <= 0 ? 'Fully Paid' : 'Unpaid';
         <main class="main-content">
             <div class="top-bar">
                 <div style="display: flex; align-items: center; gap: 15px;">
-                    <img src="../<?php echo !empty($student['profile_picture']) ? htmlspecialchars($student['profile_picture']) : 'images/user-placeholder.png'; ?>" alt="Profile" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                    <img src="../<?php echo !empty($student['profile_picture']) ? htmlspecialchars($student['profile_picture']) : 'images/aamusted.jpg'; ?>" alt="Profile" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
                     <div>
                         <h2>Welcome, <?php echo htmlspecialchars($student['full_name']); ?></h2>
                         <div style="color: #666;"><?php echo htmlspecialchars($student['index_number']); ?></div>
@@ -139,30 +139,43 @@ $status_text = $outstanding <= 0 ? 'Fully Paid' : 'Unpaid';
             <div class="section" style="margin-bottom: 30px;">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                     <h3>Recent Notifications</h3>
-                    <a href="messages.php" style="font-size: 0.9rem; color: var(--primary-color);">View all messages</a>
+                    <a href="messages.php" style="font-size: 0.9rem; color: var(--primary-color);">View all notifications</a>
                 </div>
                 <?php
-                // Fetch last 3 broadcast or direct messages
                 $stmt = $pdo->prepare("
-                    SELECT * FROM messages 
-                    WHERE is_broadcast = 1 OR receiver_id = ? 
-                    ORDER BY created_at DESC LIMIT 3
+                    SELECT title, message, created_at
+                    FROM notifications
+                    WHERE user_id = ?
+                    ORDER BY created_at DESC
+                    LIMIT 3
                 ");
                 $stmt->execute([$_SESSION['user_id']]);
-                $recent_msgs = $stmt->fetchAll();
+                $recent_notifications = $stmt->fetchAll();
 
-                if (empty($recent_msgs)):
+                if (empty($recent_notifications)):
+                    $stmt = $pdo->prepare("
+                        SELECT title, content AS message, created_at
+                        FROM messages
+                        WHERE is_broadcast = 1 OR receiver_id = ?
+                        ORDER BY created_at DESC
+                        LIMIT 3
+                    ");
+                    $stmt->execute([$_SESSION['user_id']]);
+                    $recent_notifications = $stmt->fetchAll();
+                endif;
+
+                if (empty($recent_notifications)):
                 ?>
                     <div class="card" style="padding: 15px; color: #666;">No new notifications.</div>
                 <?php else: ?>
-                    <?php foreach ($recent_msgs as $msg): ?>
-                        <div class="card" style="padding: 15px; margin-bottom: 10px; border-left: 4px solid <?php echo $msg['is_broadcast'] ? '#003366' : 'var(--primary-color)'; ?>;">
+                    <?php foreach ($recent_notifications as $item): ?>
+                        <div class="card" style="padding: 15px; margin-bottom: 10px; border-left: 4px solid var(--primary-color);">
                             <div style="display:flex; justify-content:space-between; align-items:center;">
-                                <strong><?php echo htmlspecialchars($msg['title']); ?></strong>
-                                <small style="color: #888;"><?php echo date('M d, H:i', strtotime($msg['created_at'])); ?></small>
+                                <strong><?php echo htmlspecialchars((string)$item['title']); ?></strong>
+                                <small style="color: #888;"><?php echo date('M d, H:i', strtotime((string)$item['created_at'])); ?></small>
                             </div>
                             <p style="margin-top: 5px; font-size: 0.95rem; color: #444;">
-                                <?php echo htmlspecialchars(substr($msg['content'], 0, 120)) . (strlen($msg['content']) > 120 ? '...' : ''); ?>
+                                <?php echo htmlspecialchars(substr((string)$item['message'], 0, 120)) . (strlen((string)$item['message']) > 120 ? '...' : ''); ?>
                             </p>
                             <a href="messages.php" style="font-size: 0.85rem; color: var(--secondary-color); font-weight: bold; margin-top: 5px; display: inline-block;">Read Full Message &rarr;</a>
                         </div>

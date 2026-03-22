@@ -57,11 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
             if ($email) {
                 $mailer = new Mailer();
-                $subject = "Welcome to AAMUSTED - Infotess!";
+                $subject = "Welcome to USTED - Infotess!";
                 $dateStr = date('n/j/Y');
                 $html = "<div style=\"font-family: Arial, sans-serif; max-width: 640px; margin: 0 auto; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;\">
                     <div style=\"background: linear-gradient(90deg,#4b6cb7,#182848); color:#fff; padding: 24px; text-align:center;\">
-                        <div style=\"font-size: 20px; font-weight: 700;\">Welcome to AAMUSTED - Infotess!</div>
+                        <div style=\"font-size: 20px; font-weight: 700;\">Welcome to USTED - Infotess!</div>
                         <div style=\"margin-top:8px; font-size:14px; opacity:0.9;\">Student Registration Successful</div>
                     </div>
                     <div style=\"padding: 24px; color:#111827;\">
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         <p style=\"margin-top:16px; font-size:14px; color:#374151;\">If you have any questions or notice any incorrect information, please contact the administration office immediately.</p>
                         <hr style=\"border:none; border-top:1px solid #e5e7eb; margin:20px 0;\"/>
                         <div style=\"font-size:13px; color:#6b7280; text-align:center;\">
-                            <div style=\"font-weight:600;\">AAMUSTED - Infotess</div>
+                            <div style=\"font-weight:600;\">USTED - Infotess</div>
                             <div>usted.edu.gh, Kumasi, Ghana</div>
                             <div>Phone: +233 24 091 8031</div>
                             <div style=\"margin-top:8px; font-size:12px;\">This is an automated email. Please do not reply to this message.</div>
@@ -174,6 +174,21 @@ $total_pages = ceil($total_rows / $limit);
             text-decoration: none;
             cursor: pointer;
         }
+        .upload-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #d4dbe3;
+            margin: 0 auto 10px auto;
+            display: block;
+            background: #f3f6f9;
+        }
+        .upload-file-name {
+            margin-top: 8px;
+            font-size: 0.82rem;
+            color: #4b5563;
+        }
     </style>
 </head>
 <body>
@@ -222,7 +237,9 @@ $total_pages = ceil($total_rows / $limit);
                         
                         <div style="grid-column: span 2; text-align: center; margin-bottom: 10px;">
                             <label>Profile Picture</label><br>
-                            <input type="file" name="profile_picture" class="form-control" accept="image/*">
+                            <img id="studentUploadPreview" src="../images/aamusted.jpg" alt="Profile Preview" class="upload-preview">
+                            <input type="file" name="profile_picture" id="studentProfileUpload" class="form-control" accept="image/*">
+                            <div id="studentUploadFileName" class="upload-file-name">No image selected</div>
                         </div>
 
                         <div>
@@ -356,7 +373,7 @@ $total_pages = ceil($total_rows / $limit);
                             <?php foreach ($students as $student): ?>
                             <tr>
                                 <td>
-                                    <img src="../<?php echo $student['profile_picture'] ?? 'images/user-placeholder.png'; ?>" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #ddd;">
+                                    <img src="../<?php echo $student['profile_picture'] ?? 'images/aamusted.jpg'; ?>" alt="Profile" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid #ddd;">
                                 </td>
                                 <td><?php echo htmlspecialchars($student['index_number']); ?></td>
                                 <td><?php echo htmlspecialchars($student['full_name']); ?></td>
@@ -420,7 +437,33 @@ $total_pages = ceil($total_rows / $limit);
                 modal.style.display = "none";
             }
         }
+
+        const studentProfileUpload = document.getElementById('studentProfileUpload');
+        const studentUploadPreview = document.getElementById('studentUploadPreview');
+        const studentUploadFileName = document.getElementById('studentUploadFileName');
+
+        if (studentProfileUpload && studentUploadPreview && studentUploadFileName) {
+            studentProfileUpload.addEventListener('change', function() {
+                const file = this.files && this.files[0] ? this.files[0] : null;
+                if (!file) {
+                    studentUploadPreview.src = '../images/aamusted.jpg';
+                    studentUploadFileName.textContent = 'No image selected';
+                    return;
+                }
+                studentUploadFileName.textContent = file.name;
+                if (!file.type.startsWith('image/')) {
+                    studentUploadPreview.src = '../images/aamusted.jpg';
+                    studentUploadFileName.textContent = 'Please select an image file';
+                    this.value = '';
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    studentUploadPreview.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
     </script>
 </body>
 </html>
-

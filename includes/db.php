@@ -58,6 +58,69 @@ function sanitize($input) {
     return htmlspecialchars(strip_tags(trim($input)));
 }
 
+function getBasePath() {
+    $configured = getenv('APP_BASE_PATH');
+    if ($configured !== false && trim($configured) !== '') {
+        $normalized = '/' . trim(str_replace('\\', '/', trim($configured)), '/');
+        return $normalized === '/' ? '/' : $normalized . '/';
+    }
+
+    $scriptName = str_replace('\\', '/', (string)($_SERVER['SCRIPT_NAME'] ?? '/'));
+    $segments = array_values(array_filter(explode('/', trim($scriptName, '/'))));
+    if (empty($segments)) {
+        return '/';
+    }
+
+    $knownAppDirs = ['admin', 'student', 'api', 'includes', 'jobs', 'css', 'js', 'images', 'receipts', 'database'];
+    $baseSegments = [];
+    foreach ($segments as $index => $segment) {
+        if (in_array($segment, $knownAppDirs, true)) {
+            if ($index === 0) {
+                return '/';
+            }
+            $baseSegments = array_slice($segments, 0, $index);
+            break;
+        }
+    }
+
+    if (!empty($baseSegments)) {
+        return '/' . implode('/', $baseSegments) . '/';
+    }
+
+    if (count($segments) >= 2) {
+        return '/' . $segments[0] . '/';
+    }
+
+    return '/';
+}
+
+function getAppUrl() {
+    $configured = getenv('APP_URL');
+    if ($configured !== false && trim($configured) !== '') {
+        return rtrim(trim($configured), '/');
+    }
+
+    $forwardedProto = $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '';
+    if ($forwardedProto !== '') {
+        $protoParts = explode(',', $forwardedProto);
+        $candidateScheme = strtolower(trim((string)$protoParts[0]));
+        $scheme = $candidateScheme === 'https' ? 'https' : 'http';
+    } else {
+        $isHttps = !empty($_SERVER['HTTPS']) && strtolower((string)$_SERVER['HTTPS']) !== 'off';
+        $scheme = $isHttps ? 'https' : 'http';
+    }
+
+    $forwardedHost = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? '';
+    if ($forwardedHost !== '') {
+        $hostParts = explode(',', $forwardedHost);
+        $host = trim((string)$hostParts[0]);
+    } else {
+        $host = $_SERVER['HTTP_HOST'] ?? ($_SERVER['SERVER_NAME'] ?? 'localhost');
+    }
+
+    return $scheme . '://' . $host . rtrim(getBasePath(), '/');
+}
+
 function flash($name, $message = '', $class = 'success') {
     if (!empty($message)) {
         $_SESSION[$name] = $message;

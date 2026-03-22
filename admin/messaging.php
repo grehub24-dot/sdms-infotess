@@ -17,19 +17,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($action === 'broadcast') {
         try {
-            // Send In-App Notification (Broadcast to all students)
             $stmt = $pdo->prepare("INSERT INTO messages (sender_id, title, content, is_broadcast) VALUES (?, ?, ?, 1)");
             $stmt->execute([$_SESSION['user_id'], $title, $content]);
 
-            // Optional SMS (Caution: costly for large databases)
             if ($send_sms) {
                 $sms = new SMSHelper();
-                $students = $pdo->query("SELECT phone_number FROM students WHERE phone_number IS NOT NULL AND phone_number != ''")->fetchAll();
+                $smsText = trim($title . ': ' . $content);
+                $students = $pdo->query("
+                    SELECT DISTINCT s.phone_number
+                    FROM students s
+                    LEFT JOIN users u ON s.user_id = u.id
+                    WHERE s.phone_number IS NOT NULL
+                      AND s.phone_number != ''
+                      AND (u.id IS NULL OR u.status = 'active')
+                ")->fetchAll();
+                $sentCount = 0;
+                $failedCount = 0;
                 foreach ($students as $student) {
-                    $sms->send($student['phone_number'], "$title: $content");
+                    if ($sms->send($student['phone_number'], $smsText)) {
+                        $sentCount++;
+                    } else {
+                        $failedCount++;
+                    }
                 }
+                $message = "Broadcast sent. SMS delivered to $sentCount member(s)";
+                if ($failedCount > 0) {
+                    $message .= " ($failedCount failed).";
+                } else {
+                    $message .= ".";
+                }
+            } else {
+                $message = "Broadcast message sent successfully!";
             }
-            $message = "Broadcast message sent successfully!";
         } catch (Exception $e) {
             $error = "Error: " . $e->getMessage();
         }
@@ -52,26 +71,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $sms = new SMSHelper();
                 $count = 0;
+                $failedCount = 0;
 
                 if ($recipient_type === 'all') {
-                    $students = $pdo->query("SELECT phone_number FROM students WHERE phone_number IS NOT NULL AND phone_number != ''")->fetchAll();
+                    $students = $pdo->query("
+                        SELECT DISTINCT s.phone_number
+                        FROM students s
+                        LEFT JOIN users u ON s.user_id = u.id
+                        WHERE s.phone_number IS NOT NULL
+                          AND s.phone_number != ''
+                          AND (u.id IS NULL OR u.status = 'active')
+                    ")->fetchAll();
                     foreach ($students as $student) {
                         if ($sms->send($student['phone_number'], $sms_content)) {
                             $count++;
+                        } else {
+                            $failedCount++;
                         }
                     }
-                    // Log the bulk SMS as a broadcast message
                     $stmt = $pdo->prepare("INSERT INTO messages (sender_id, title, content, is_broadcast) VALUES (?, ?, ?, 1)");
                     $stmt->execute([$_SESSION['user_id'], "Bulk SMS", $sms_content]);
-                    
-                    $message = "SMS sent successfully to all ($count) students!";
+
+                    $message = "SMS sent successfully to $count member(s)";
+                    if ($failedCount > 0) {
+                        $message .= " ($failedCount failed).";
+                    } else {
+                        $message .= ".";
+                    }
                 } else {
                     $stmt = $pdo->prepare("SELECT s.phone_number, s.full_name, s.user_id FROM students s WHERE s.id = ?");
                     $stmt->execute([$student_id]);
                     $student = $stmt->fetch();
                     if ($student && !empty($student['phone_number'])) {
                         if ($sms->send($student['phone_number'], $sms_content)) {
-                            // Log the individual SMS
                             $stmt = $pdo->prepare("INSERT INTO messages (sender_id, receiver_id, title, content, is_broadcast) VALUES (?, ?, ?, ?, 0)");
                             $stmt->execute([$_SESSION['user_id'], $student['user_id'], "Individual SMS", $sms_content]);
                             
@@ -158,8 +190,8 @@ $all_students = $pdo->query("SELECT id, full_name, index_number FROM students OR
             <div class="top-bar">
                 <h2>Message Platform</h2>
                 <div style="display:flex; gap:10px;">
-                    <button onclick="document.getElementById('msgModal').style.display='block'" class="btn-primary"><i class="fas fa-paper-plane"></i> New Broadcast</button>
-                    <button onclick="document.getElementById('smsModal').style.display='block'" class="btn-primary" style="background:#28a745; border-color:#28a745;"><i class="fas fa-sms"></i> Send SMS</button>
+                    <button onclick="document.getElementById('msgModal').style.display='block'" class="btn-admin-action"><i class="fas fa-paper-plane"></i> New Broadcast</button>
+                    <button onclick="document.getElementById('smsModal').style.display='block'" class="btn-admin-action btn-admin-success"><i class="fas fa-sms"></i> Send SMS</button>
                 </div>
             </div>
 

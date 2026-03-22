@@ -31,7 +31,7 @@ $staff_members = [
         <?php if ($overview): ?>
             <?php echo $overview; ?>
         <?php else: ?>
-            <p>The Department of Information Technology Education (DITE) is a leading department in the Faculty of Applied Sciences and Mathematics Education (FASME) at AAMUSTED.</p>
+            <p>The Department of Information Technology Education (DITE) is a leading department in the Faculty of Applied Sciences and Mathematics Education (FASME) at USTED.</p>
             <p>We are dedicated to training competent teachers and professionals in Information Technology who can contribute meaningfully to national development.</p>
             
             <h3>Our Mission</h3>
@@ -41,7 +41,7 @@ $staff_members = [
             <ul>
                 <li>B.Sc. Information Technology Education</li>
                 <li>Diploma in Information Technology</li>
-                <li>M.Phil. Information Technology</li>
+                <li>M.Phil. Information Technology etc</li>
             </ul>
         <?php endif; ?>
     </div>

@@ -3,16 +3,17 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../../includes/db.php';
+header('Content-Type: application/json; charset=utf-8');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
     http_response_code(405);
-    echo json_encode(['error' => 'Method not allowed']);
+    echo json_encode(['ok' => false, 'error' => 'Method not allowed']);
     exit;
 }
 
 if (!isLoggedIn() || !isAdmin()) {
     http_response_code(401);
-    echo json_encode(['error' => 'Unauthorized']);
+    echo json_encode(['ok' => false, 'error' => 'Unauthorized']);
     exit;
 }
 
@@ -20,7 +21,7 @@ $index_number = isset($_GET['index_number']) ? trim((string)$_GET['index_number'
 
 if ($index_number === '') {
     http_response_code(400);
-    echo json_encode(['error' => 'index_number is required']);
+    echo json_encode(['ok' => false, 'error' => 'index_number is required']);
     exit;
 }
 
@@ -56,7 +57,7 @@ try {
 
     if (!$student) {
         http_response_code(404);
-        echo json_encode(['error' => 'Student not found']);
+        echo json_encode(['ok' => false, 'error' => 'Student not found']);
         exit;
     }
 
@@ -65,6 +66,6 @@ try {
     exit;
 } catch (Throwable $e) {
     http_response_code(500);
-    echo json_encode(['error' => 'Failed to fetch student: ' . $e->getMessage()]);
+    echo json_encode(['ok' => false, 'error' => 'Failed to fetch student: ' . $e->getMessage()]);
     exit;
 }

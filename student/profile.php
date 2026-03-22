@@ -63,6 +63,13 @@ $student = $stmt->fetch();
     <title>My Profile - INFOTESS</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .profile-upload-name {
+            margin-top: 8px;
+            font-size: 0.82rem;
+            color: #4b5563;
+        }
+    </style>
 </head>
 <body>
     <div class="dashboard-container">
@@ -105,10 +112,11 @@ $student = $stmt->fetch();
                 <h3>Personal Information</h3>
                 <form method="POST" action="" enctype="multipart/form-data">
                     <div class="form-group" style="text-align:center;">
-                        <img src="../<?php echo $student['profile_picture'] ?? 'images/default-profile.png'; ?>" alt="Profile Picture" style="width:150px; height:150px; border-radius:50%; object-fit:cover; margin-bottom:10px;">
+                        <img id="profilePicturePreview" src="../<?php echo $student['profile_picture'] ?? 'images/aamusted.jpg'; ?>" alt="Profile Picture" style="width:150px; height:150px; border-radius:50%; object-fit:cover; margin-bottom:10px;">
                         <br>
                         <label for="profile_picture" class="btn-login" style="cursor:pointer; display:inline-block;">Change Picture</label>
-                        <input type="file" name="profile_picture" id="profile_picture" style="display:none;">
+                        <input type="file" name="profile_picture" id="profile_picture" style="display:none;" accept="image/*">
+                        <div id="profileUploadName" class="profile-upload-name">No image selected</div>
                     </div>
                     <div class="form-group">
                         <label>Full Name</label>
@@ -147,5 +155,38 @@ $student = $stmt->fetch();
             </div>
         </main>
     </div>
+    <script>
+        const profilePictureInput = document.getElementById('profile_picture');
+        const profilePicturePreview = document.getElementById('profilePicturePreview');
+        const profileUploadName = document.getElementById('profileUploadName');
+
+        if (profilePictureInput && profilePicturePreview && profileUploadName) {
+            profilePictureInput.addEventListener('change', function() {
+                const file = this.files && this.files[0] ? this.files[0] : null;
+                const defaultSrc = "../<?php echo $student['profile_picture'] ?? 'images/aamusted.jpg'; ?>";
+
+                if (!file) {
+                    profilePicturePreview.src = defaultSrc;
+                    profileUploadName.textContent = 'No image selected';
+                    return;
+                }
+
+                profileUploadName.textContent = file.name;
+
+                if (!file.type.startsWith('image/')) {
+                    profilePicturePreview.src = defaultSrc;
+                    profileUploadName.textContent = 'Please select an image file';
+                    this.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    profilePicturePreview.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    </script>
 </body>
 </html>

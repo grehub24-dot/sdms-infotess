@@ -10,7 +10,7 @@ $activities = $stmt->fetchAll();
 <!-- Hero Section -->
 <section class="hero">
     <h1>Welcome to INFOTESS</h1>
-    <p>Information Technology Students’ Society of AAMUSTED. Empowering students through technology, innovation, and leadership.</p>
+    <p>Information Technology Students’ Society of USTED. Empowering students through technology, innovation, and leadership.</p>
     <a href="about.php" class="btn-cta">Learn More</a>
 </section>
 
@@ -19,7 +19,7 @@ $activities = $stmt->fetchAll();
     <div class="container">
         <h2 class="section-title">Who We Are</h2>
         <div style="text-align: center; max-width: 800px; margin: 0 auto;">
-            <p>INFOTESS is the official student body for the Department of Information Technology Education (DITE) at AAMUSTED. We are dedicated to bridging the gap between academic theory and industry practice through workshops, seminars, and collaborative projects.</p>
+            <p>INFOTESS is the official student body for the Department of Information Technology Education (DITE) at USTED. We are dedicated to bridging the gap between academic theory and industry practice through workshops, seminars, and collaborative projects.</p>
         </div>
     </div>
 </section>
@@ -43,24 +43,30 @@ $activities = $stmt->fetchAll();
             <?php else: ?>
                 <!-- Static placeholders if no DB data -->
                 <div class="card">
-                    <img src="images/event1.jpg" alt="Event 1" style="background:#ccc;">
+                    <img src="images/aamusted.jpg" alt="Freshers Week Celebration" style="background:#ccc;">
                     <div class="card-content">
-                        <h3 class="card-title">Annual Tech Week</h3>
-                        <p>Join us for a week of coding, innovation, and networking with industry experts.</p>
+                        <span style="display:inline-block; font-size:0.8rem; color:#666; margin-bottom:8px;">Activity</span>
+                        <h3 class="card-title">Freshers Week Celebration</h3>
+                        <p>Welcome program for new students with orientation, networking, and onboarding activities.</p>
+                        <a href="activities.php" style="color: var(--primary-color); font-weight: bold; margin-top: 10px; display: inline-block;">Read More &rarr;</a>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="images/event2.jpg" alt="Event 2" style="background:#ccc;">
+                    <img src="images/infotess.png" alt="Community of Practice" style="background:#ccc;">
                     <div class="card-content">
-                        <h3 class="card-title">Freshers' Akwaaba</h3>
-                        <p>Welcoming our new students to the DITE family with fun and orientation.</p>
+                        <span style="display:inline-block; font-size:0.8rem; color:#666; margin-bottom:8px;">Activity</span>
+                        <h3 class="card-title">Community of Practice</h3>
+                        <p>Peer-led knowledge sharing sessions focused on practical skills and collaborative learning.</p>
+                        <a href="activities.php" style="color: var(--primary-color); font-weight: bold; margin-top: 10px; display: inline-block;">Read More &rarr;</a>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="images/event3.jpg" alt="Event 3" style="background:#ccc;">
+                    <img src="images/aamusted-logo.svg" alt="Infotess Cloud 9 Connection" style="background:#ccc;">
                     <div class="card-content">
-                        <h3 class="card-title">Web Dev Bootcamp</h3>
-                        <p>A hands-on session on modern web development technologies.</p>
+                        <span style="display:inline-block; font-size:0.8rem; color:#666; margin-bottom:8px;">Activity</span>
+                        <h3 class="card-title">Infotess Cloud 9 Connection: Chocolate + Photoshoot (Valentine)</h3>
+                        <p>Valentine special social-tech event featuring community bonding, treats, and themed photoshoot moments.</p>
+                        <a href="activities.php" style="color: var(--primary-color); font-weight: bold; margin-top: 10px; display: inline-block;">Read More &rarr;</a>
                     </div>
                 </div>
             <?php endif; ?>

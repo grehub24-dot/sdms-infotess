@@ -65,11 +65,11 @@ if ($receipt_number) {
                 <h3>Enter Receipt Number or Scan QR</h3>
                 <form method="GET" action="" style="display: flex; gap: 10px; margin-bottom: 20px;">
                     <input type="text" name="receipt" value="<?php echo htmlspecialchars($receipt_number); ?>" placeholder="SDMS-2026-XXXX" class="form-control" style="flex: 1;">
-                    <button type="submit" class="btn-primary">Verify</button>
+                    <button type="submit" class="btn-admin-action"><i class="fas fa-check-circle"></i> Verify</button>
                 </form>
                 
                 <div id="reader" style="width: 300px; display: none;"></div>
-                <button onclick="startScanner()" class="btn-primary" style="background: #6c757d;">Start QR Scanner</button>
+                <button onclick="startScanner()" class="btn-admin-action btn-admin-secondary"><i class="fas fa-qrcode"></i> Start QR Scanner</button>
             </div>
 
             <?php if ($receipt_number): ?>

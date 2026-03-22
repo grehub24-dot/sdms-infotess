@@ -51,7 +51,7 @@ $defaults = [
     'annual_dues_amount' => '100.00',
     'payment_modes' => 'Cash,Mobile Money,Bank Transfer',
     'department_name' => 'Information Technology Education',
-    'institution_name' => 'AAMUSTED'
+    'institution_name' => 'USTED'
 ];
 $settings = array_merge($defaults, $settings);
 ?>
@@ -155,7 +155,7 @@ $settings = array_merge($defaults, $settings);
                 <div class="card">
                     <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
                         <h3>General Settings</h3>
-                        <button onclick="document.getElementById('settingsModal').style.display='block'" class="btn-primary"><i class="fas fa-edit"></i> Edit Configuration</button>
+                        <button onclick="document.getElementById('settingsModal').style.display='block'" class="btn-admin-action"><i class="fas fa-edit"></i> Edit Configuration</button>
                     </div>
                     <div class="card-content">
                         <div class="settings-grid">

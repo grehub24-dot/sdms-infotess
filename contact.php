@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong><br>
                     Department of Information Technology Education (DITE)<br>
                     Faculty of Applied Sciences and Mathematics Education (FASME)<br>
-                    AAMUSTED, Kumasi Campus</p>
+                    USTED, Kumasi Campus</p>
                     
                     <p style="margin-top: 20px;"><i class="fas fa-phone"></i> <strong>Phone:</strong><br>
                     +233 24 091 8031</p>

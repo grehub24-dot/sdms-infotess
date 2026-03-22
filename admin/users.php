@@ -110,7 +110,7 @@ $total_pages = ceil($total_rows / $limit);
                                     <?php if ($user['role'] !== 'super_admin' && $user['id'] !== $_SESSION['user_id']): ?>
                                         <form method="POST" onsubmit="return confirm('Are you sure?');" style="display:inline;">
                                             <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
-                                            <button type="submit" name="delete_user" class="btn-danger btn-sm">Delete</button>
+                                            <button type="submit" name="delete_user" class="btn-admin-action btn-admin-danger btn-admin-sm"><i class="fas fa-trash"></i> Delete</button>
                                         </form>
                                     <?php endif; ?>
                                 </td>

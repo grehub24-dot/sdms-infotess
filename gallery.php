@@ -15,15 +15,18 @@ $gallery = $stmt->fetchAll();
 <div class="section">
     <div class="container">
         <?php if (empty($gallery)): ?>
-            <p style="text-align: center;">Our gallery is being updated. Check back soon!</p>
+            <div class="card" style="text-align: center; padding: 40px;">
+                <i class="fas fa-images" style="font-size: 3rem; color: #ccc; margin-bottom: 20px;"></i>
+                <p>No gallery items are available yet.</p>
+            </div>
         <?php else: ?>
             <div class="card-grid">
                 <?php foreach ($gallery as $item): ?>
                 <div class="card gallery-item">
-                    <img src="<?php echo $item['image_url']; ?>" alt="<?php echo $item['title']; ?>" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                    <img src="<?php echo htmlspecialchars($item['image_url']); ?>" alt="<?php echo htmlspecialchars($item['title']); ?>" style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px 8px 0 0;">
                     <div class="card-content">
-                        <h4 class="card-title"><?php echo $item['title']; ?></h4>
-                        <p><small><?php echo $item['category']; ?></small></p>
+                        <h4 class="card-title"><?php echo htmlspecialchars($item['title']); ?></h4>
+                        <p><small><?php echo htmlspecialchars($item['category']); ?></small></p>
                     </div>
                 </div>
                 <?php endforeach; ?>

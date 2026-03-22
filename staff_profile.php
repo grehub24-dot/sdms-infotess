@@ -8,77 +8,77 @@ $staff_members = [
         'role' => 'Dean, FASME', 
         'image' => 'images/PROF-YARHANDS.png',
         'bio' => 'Prof. Yarhands Dissou Arthur is the Dean of the Faculty of Applied Sciences and Mathematics Education. He is a distinguished scholar with extensive experience in educational leadership and research.',
-        'email' => 'ydarthur@aamusted.edu.gh',
+        'email' => 'ydarthur@usted.edu.gh',
         'research' => ['Educational Leadership', 'Applied Sciences', 'Curriculum Development']
     ],
     'Dr. George Asante' => [
         'role' => 'H.O.D, Department of IT Education', 
         'image' => 'images/George-Asante.png',
         'bio' => 'Dr. George Asante serves as the Head of the Department of Information Technology Education. He is committed to advancing IT education and fostering a culture of innovation among students.',
-        'email' => 'gasante@aamusted.edu.gh',
+        'email' => 'gasante@usted.edu.gh',
         'research' => ['Information Technology Education', 'E-Learning', 'Educational Technology']
     ],
     'Prof. Francis Ohene Boateng' => [
         'role' => 'Associate Professor', 
         'image' => 'images/PROF-FO-BOATENG.png',
         'bio' => 'Prof. Francis Ohene Boateng is an Associate Professor with a focus on computing and technology integration in education.',
-        'email' => 'foboateng@aamusted.edu.gh',
+        'email' => 'foboateng@usted.edu.gh',
         'research' => ['Computing', 'Artificial Intelligence', 'Data Science']
     ],
     'Prof. Ebenezer Bonyah' => [
         'role' => 'Professor', 
         'image' => 'images/PROF_BONYAH-.png',
         'bio' => 'Prof. Ebenezer Bonyah is a Professor known for his contributions to mathematics and its applications in technology.',
-        'email' => 'ebonyah@aamusted.edu.gh',
+        'email' => 'ebonyah@usted.edu.gh',
         'research' => ['Mathematical Modeling', 'Applied Mathematics', 'Statistics']
     ],
     'Dr. Adasa Nkrumah Kofi Frimpong' => [
         'role' => 'Ag. Head, Academic & Admin Computing', 
         'image' => 'images/Dr.-Adasa-Nkrumah-K.-F.jpg',
         'bio' => 'Dr. Adasa Nkrumah Kofi Frimpong heads the Academic and Administrative Computing unit, ensuring robust digital infrastructure for the university.',
-        'email' => 'ankfrimpong@aamusted.edu.gh',
+        'email' => 'ankfrimpong@usted.edu.gh',
         'research' => ['Cloud Computing', 'Network Security', 'IT Infrastructure']
     ],
     'Rev. Dr. Benjamin Adu Obeng' => [
         'role' => 'Lecturer', 
         'image' => 'images/Rev.-Dr.-Adu-Obeng.png',
         'bio' => 'Rev. Dr. Benjamin Adu Obeng combines his pastoral and academic roles to mentor students in both character and learning.',
-        'email' => 'baobeng@aamusted.edu.gh',
+        'email' => 'baobeng@usted.edu.gh',
         'research' => ['Ethics in IT', 'Software Engineering', 'Database Management']
     ],
     'Dr. Joseph Frank Gordon' => [
         'role' => 'Lecturer', 
         'image' => 'images/Dr.-Joseph-Gordon.png',
         'bio' => 'Dr. Joseph Frank Gordon is a dedicated lecturer with a passion for teaching and research in computer science.',
-        'email' => 'jfgordon@aamusted.edu.gh',
+        'email' => 'jfgordon@usted.edu.gh',
         'research' => ['Computer Science Education', 'Programming', 'Algorithms']
     ],
     'Dr. Emmanuel Akweittey' => [
         'role' => 'Senior Lecturer', 
         'image' => 'images/AKWEITTEY-.jpg',
         'bio' => 'Dr. Emmanuel Akweittey is a Senior Lecturer with expertise in advanced computing concepts and methodologies.',
-        'email' => 'eakweittey@aamusted.edu.gh',
+        'email' => 'eakweittey@usted.edu.gh',
         'research' => ['Advanced Computing', 'Machine Learning', 'Cybersecurity']
     ],
     'Dr. Ernest Larbi' => [
         'role' => 'Lecturer', 
         'image' => 'images/Mr.-Ernest-Larbi.png',
         'bio' => 'Dr. Ernest Larbi is a lecturer focused on practical IT skills and student development.',
-        'email' => 'elarbi@aamusted.edu.gh',
+        'email' => 'elarbi@usted.edu.gh',
         'research' => ['Web Technologies', 'Mobile Application Development', 'HCI']
     ],
     'Mr. Franco Osei-Wusu' => [
         'role' => 'Assistant Lecturer', 
         'image' => 'images/franco.png',
         'bio' => 'Mr. Franco Osei-Wusu is an Assistant Lecturer supporting the department in various academic and technical capacities.',
-        'email' => 'foseiwusu@aamusted.edu.gh',
+        'email' => 'foseiwusu@usted.edu.gh',
         'research' => ['Network Administration', 'System Analysis', 'Tech Support']
     ],
     'Mr. Kennedy Gyimah' => [
         'role' => 'Lecturer', 
         'image' => 'images/Kennedy-Gyimah.png',
         'bio' => 'Mr. Kennedy Gyimah is a Lecturer with expertise in Applied Mathematics, Machine Learning, and Computer Vision. He is dedicated to integrating technology into mathematical education.',
-        'email' => 'kennedygyimah@aamusted.edu.gh',
+        'email' => 'kennedygyimah@usted.edu.gh',
         'research' => ['Applied Mathematics', 'Machine Learning', 'Computer Vision']
     ]
 ];
@@ -114,7 +114,7 @@ if (!$staff) {
                     <div style="margin-bottom: 30px;">
                         <h4 style="border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">Contact Information</h4>
                         <p><i class="fas fa-envelope" style="width: 25px; color: var(--primary-color);"></i> <a href="mailto:<?php echo $staff['email']; ?>"><?php echo $staff['email']; ?></a></p>
-                        <p><i class="fas fa-map-marker-alt" style="width: 25px; color: var(--primary-color);"></i> Department of IT Education, AAMUSTED</p>
+                        <p><i class="fas fa-map-marker-alt" style="width: 25px; color: var(--primary-color);"></i> Department of IT Education, USTED</p>
                     </div>
 
                     <?php if (!empty($staff['research'])): ?>

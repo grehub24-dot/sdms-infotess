@@ -80,6 +80,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 require_once 'includes/header.php';
 ?>
 
+<style>
+    .password-field {
+        position: relative;
+    }
+    .password-field .form-control {
+        padding-right: 86px;
+    }
+    .password-toggle {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        border: 1px solid #d0d7de;
+        background: #f8fafc;
+        color: #1f2937;
+        border-radius: 6px;
+        padding: 5px 10px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        line-height: 1;
+    }
+</style>
+
 <div class="section">
     <div class="form-container" style="text-align: center;">
         <img src="images/infotess.png" alt="INFOTESS Logo" style="width: 100px; margin-bottom: 20px;">
@@ -96,7 +120,10 @@ require_once 'includes/header.php';
             
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" class="form-control" required placeholder="Enter Password">
+                <div class="password-field">
+                    <input type="password" name="password" id="password" class="form-control" required placeholder="Enter Password">
+                    <button type="button" class="password-toggle" data-target="password" aria-label="Toggle password visibility">View</button>
+                </div>
             </div>
             
             <button type="submit" class="btn-submit">Login</button>
@@ -107,5 +134,21 @@ require_once 'includes/header.php';
         </form>
     </div>
 </div>
+
+<script>
+    document.querySelectorAll('.password-toggle').forEach(function(button) {
+        button.addEventListener('click', function() {
+            const targetId = button.getAttribute('data-target');
+            const input = document.getElementById(targetId);
+            if (!input) {
+                return;
+            }
+            const show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            button.textContent = show ? 'Hide' : 'View';
+            button.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+        });
+    });
+</script>
 
 <?php require_once 'includes/footer.php'; ?>

@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                     // Send Email
                     $mailer = new Mailer();
-                    $subject = "Welcome to AAMUSTED - Infotess!";
+                    $subject = "Welcome to USTED - Infotess!";
                     $dateStr = date('n/j/Y');
                     
                     $email_html = "
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <body>
                         <div class='email-container'>
                             <div class='header'>
-                                <h1>Welcome to AAMUSTED - Infotess!</h1>
+                                <h1>Welcome to USTED - Infotess!</h1>
                                 <p>Student Registration Successful</p>
                             </div>
                             <div class='content'>
@@ -107,6 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                         <div class='info-label'>Index Number:</div>
                                         <div class='info-value'>" . htmlspecialchars($index_number, ENT_QUOTES, 'UTF-8') . "</div>
                                     </div>
+                                  
                                     <div class='info-row'>
                                         <div class='info-label'>Level:</div>
                                         <div class='info-value'>Level " . htmlspecialchars($level, ENT_QUOTES, 'UTF-8') . "</div>
@@ -131,12 +132,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                         <div class='info-label'>Registration Date:</div>
                                         <div class='info-value'>" . $dateStr . "</div>
                                     </div>
+                                      <div class='info-row'>
+                                        <div class='info-label'>Temporary Password:</div>
+                                        <div class='info-value'>" . htmlspecialchars($auto_password, ENT_QUOTES, 'UTF-8') . "</div>
+                                    </div>
                                 </div>
                                 
                                 <div class='notes'>
                                     <strong>Important Information:</strong>
                                     <ul>
                                         <li>Keep your index number safe - you'll need it for all transactions</li>
+                                        <li>Use your temporary password to login, then reset it immediately</li>
                                         <li>All payment receipts will be sent to this email address</li>
                                         <li>Contact the finance office for any payment-related queries</li>
                                     </ul>
@@ -145,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                             </div>
                             
                             <div class='footer'>
-                                <p><strong>AAMUSTED - Infotess</strong></p>
+                                <p><strong>USTED - Infotess</strong></p>
                                 <p><a href='http://usted.edu.gh'>usted.edu.gh</a>, Kumasi, Ghana</p>
                                 <p>Phone: +233 24 091 8031</p>
                                 <p style='color: #999; margin-top: 20px;'>This is an automated email. Please do not reply to this message.</p>
@@ -160,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     // Send SMS
                     if ($phone) {
                         $smsHelper = new SMSHelper();
-                        $smsMsg = "Welcome to INFOTESS! Reg successful. Index: $index_number. Your password is: $auto_password. Please login and change it.";
+                        $smsMsg = "Welcome to INFOTESS! Reg successful. Index: $index_number. Your temporary password is: $auto_password. Please login and reset your password.";
                         $smsHelper->send($phone, $smsMsg);
                     }
 

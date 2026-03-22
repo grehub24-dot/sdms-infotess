@@ -6,8 +6,8 @@ function scrape_news_and_events() {
     
     // Target URLs (Main University News and Departmental)
     $urls = [
-        'https://aamusted.edu.gh/news-events/',
-        'https://aamusted.edu.gh/category/news/'
+        'https://usted.edu.gh/news-events/',
+        'https://usted.edu.gh/category/news/'
     ];
 
     foreach ($urls as $url) {

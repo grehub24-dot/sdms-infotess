@@ -150,11 +150,11 @@ $required_dues = number_format((float)($settings['annual_dues_amount'] ?? 100.00
                             <li style="margin-bottom: 10px;"><i class="fas fa-angle-right"></i> <strong>Consolidated Bank Ghana (CBG)</strong></li>
                         </ul>
                         <div class="alert alert-warning" style="margin-top: 15px; font-size: 0.9rem;">
-                            <strong>Instruction:</strong> Mention "AAMUSTED School Fees" and provide your <strong>Student Index Number</strong> and <strong>Full Name</strong> to the teller.
+                            <strong>Instruction:</strong> Mention "USTED School Fees" and provide your <strong>Student Index Number</strong> and <strong>Full Name</strong> to the teller.
                         </div>
                         
                         <h4 style="margin-top: 20px;">Mobile Money (Shortcode)</h4>
-                        <p>Dial <strong>*887*18#</strong> on all networks and follow the prompts. Select "AAMUSTED" from the list.</p>
+                        <p>Dial <strong>*887*18#</strong> on all networks and follow the prompts. Select "USTED" from the list.</p>
                     </div>
                 </div>
 
@@ -172,7 +172,7 @@ $required_dues = number_format((float)($settings['annual_dues_amount'] ?? 100.00
                         <div style="background: #f8f9fa; padding: 15px; border-radius: 5px;">
                             <strong>Option 2: Mobile Money</strong><br>
                             <strong>Number:</strong> 054-XXXX-XXX<br>
-                            <strong>Name:</strong> INFOTESS AAMUSTED<br>
+                            <strong>Name:</strong> INFOTESS USTED<br>
                             <strong>Ref:</strong> Your Index Number
                         </div>
 

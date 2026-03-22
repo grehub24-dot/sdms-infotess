@@ -131,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <div class='email-container'>
                         <div class='header'>
                             <h1>✓ Payment Received!</h1>
-                            <p>AAMUSTED - Infotess Dues Payment Confirmation</p>
+                            <p>USTED - Infotess Dues Payment Confirmation</p>
                         </div>
                         <div class='content'>
                             <p>Dear <strong>{$student['full_name']}</strong>,</p>
@@ -186,7 +186,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                 </div>
                                 
                                 <div style='text-align: center; margin-top: 20px;'>
-                                    <img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" . urlencode("http://localhost/Infotess/verify_public.php?receipt=" . $receipt_number) . "' alt='QR Code' style='width: 100px; height: 100px; margin-bottom: 10px;' />
+                                    <img src='https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=" . urlencode(getAppUrl() . "/verify_public.php?receipt=" . $receipt_number) . "' alt='QR Code' style='width: 100px; height: 100px; margin-bottom: 10px;' />
                                     <br>
                                     <div class='paid-badge'>✓ PAID</div>
                                 </div>
@@ -205,7 +205,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         </div>
                         
                         <div class='footer'>
-                            <p><strong>AAMUSTED - Infotess - Finance Office</strong></p>
+                            <p><strong>USTED - Infotess - Finance Office</strong></p>
                             <p><a href='http://usted.edu.gh'>usted.edu.gh</a>, Kumasi, Ghana</p>
                             <p>Phone: +233 24 091 8031</p>
                             <p style='color: #999; margin-top: 20px;'>This is an automated email. Please do not reply to this message.<br>For inquiries, contact the finance office directly.</p>
@@ -409,6 +409,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         <div class="form-group">
                             <label>Student Index Number</label>
                             <input type="text" name="index_number" class="form-control" required placeholder="e.g. 5231230001">
+                            <small id="indexLookupStatus" style="display:none; margin-top:6px; font-size:0.85rem;"></small>
                         </div>
 
                         <div class="form-group">
@@ -531,89 +532,145 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     </div>
 
     <script>
-        // Modal Logic
         const modal = document.getElementById("paymentModal");
         const btn = document.getElementById("openModalBtn");
         const span = document.getElementsByClassName("close-btn")[0];
+        const indexInput = document.querySelector('input[name="index_number"]');
+        const programmeSelect = document.querySelector('select[name="programme"]');
+        const levelInput = document.querySelector('input[name="level"]');
+        const classSelect = document.querySelector('select[name="class"]');
+        const streamSelect = document.querySelector('select[name="stream"]');
+        const lookupStatus = document.getElementById('indexLookupStatus');
+        let lookupTimer = null;
+        let lastLookupValue = '';
 
-        // When the user clicks the button, open the modal 
         btn.onclick = function() {
             modal.style.display = "block";
         }
 
-        // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
             modal.style.display = "none";
         }
 
-        // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
         }
 
-        // Auto-fill Student Details
-        document.querySelector('input[name="index_number"]').addEventListener('blur', function() {
-            const indexNumber = this.value.trim();
-            if (indexNumber.length > 0) {
-                fetch(`../api/admin/get_student_by_index.php?index_number=${encodeURIComponent(indexNumber)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.ok) {
-                            const student = data.student;
-                            
-                            // Fill Programme / Department
-                            const programmeSelect = document.querySelector('select[name="programme"]');
-                            if (programmeSelect && student.department) {
-                                // Try to find a matching option
-                                let found = false;
-                                for (let i = 0; i < programmeSelect.options.length; i++) {
-                                    if (programmeSelect.options[i].value === student.department) {
-                                        programmeSelect.selectedIndex = i;
-                                        found = true;
-                                        break;
-                                    }
-                                }
-                                // If not found, maybe just set the value (if it allows custom values or just select the first one?)
-                                // Or maybe add it as a new option?
-                                if (!found) {
-                                    // Create a new option and select it
-                                    const option = document.createElement('option');
-                                    option.value = student.department;
-                                    option.text = student.department;
-                                    programmeSelect.add(option);
-                                    programmeSelect.value = student.department;
-                                }
-                            }
-
-                            // Fill Level
-                            const levelInput = document.querySelector('input[name="level"]');
-                            if (levelInput && student.level) {
-                                levelInput.value = student.level;
-                            }
-
-                            // Fill Class
-                            const classSelect = document.querySelector('select[name="class"]');
-                            if (classSelect && student.class_name) {
-                                classSelect.value = student.class_name;
-                            }
-
-                            // Fill Stream
-                            const streamSelect = document.querySelector('select[name="stream"]');
-                            if (streamSelect && student.stream) {
-                                streamSelect.value = student.stream;
-                            }
-                        } else {
-                            // Clear fields if student not found? Or just leave them?
-                            // Maybe show a small message?
-                            console.log('Student not found');
-                        }
-                    })
-                    .catch(error => console.error('Error fetching student:', error));
+        function setLookupStatus(message, color) {
+            if (!lookupStatus) return;
+            if (!message) {
+                lookupStatus.style.display = 'none';
+                lookupStatus.textContent = '';
+                return;
             }
-        });
+            lookupStatus.style.display = 'block';
+            lookupStatus.style.color = color;
+            lookupStatus.textContent = message;
+        }
+
+        function selectOrCreateOption(selectElement, value) {
+            if (!selectElement || !value) return;
+            const normalized = String(value).trim().toLowerCase();
+            let matched = false;
+            for (let i = 0; i < selectElement.options.length; i++) {
+                const optionValue = String(selectElement.options[i].value || '').trim().toLowerCase();
+                if (optionValue === normalized) {
+                    selectElement.selectedIndex = i;
+                    matched = true;
+                    break;
+                }
+            }
+            if (!matched) {
+                const option = document.createElement('option');
+                option.value = value;
+                option.text = value;
+                selectElement.add(option);
+                selectElement.value = value;
+            }
+        }
+
+        function clearAutoFilledFields() {
+            if (programmeSelect) programmeSelect.value = '';
+            if (levelInput) levelInput.value = '';
+            if (classSelect) classSelect.value = '';
+            if (streamSelect) streamSelect.value = '';
+        }
+
+        function fillStudentFields(student) {
+            if (programmeSelect && student.department) {
+                selectOrCreateOption(programmeSelect, student.department);
+            }
+            if (levelInput && student.level) {
+                levelInput.value = student.level;
+            }
+            if (classSelect && student.class_name) {
+                selectOrCreateOption(classSelect, student.class_name);
+            }
+            if (streamSelect && student.stream) {
+                selectOrCreateOption(streamSelect, student.stream);
+            }
+        }
+
+        function lookupStudent(force = false) {
+            if (!indexInput) return;
+            const rawValue = indexInput.value || '';
+            const indexNumber = rawValue.replace(/\s+/g, '').toUpperCase();
+            indexInput.value = indexNumber;
+            if (!indexNumber) {
+                lastLookupValue = '';
+                clearAutoFilledFields();
+                setLookupStatus('', '');
+                return;
+            }
+            if (!force && (indexNumber.length < 8 || indexNumber === lastLookupValue)) {
+                return;
+            }
+            lastLookupValue = indexNumber;
+            setLookupStatus('Fetching student details...', '#0c5fb5');
+
+            fetch(`../api/admin/get_student_by_index.php?index_number=${encodeURIComponent(indexNumber)}`, {
+                headers: { 'Accept': 'application/json' }
+            })
+                .then(async response => {
+                    const payload = await response.json().catch(() => ({}));
+                    if (!response.ok || !payload.ok || !payload.student) {
+                        throw new Error(payload.error || 'Student not found');
+                    }
+                    return payload.student;
+                })
+                .then(student => {
+                    fillStudentFields(student);
+                    setLookupStatus(`Loaded: ${student.full_name} (${student.index_number})`, '#15803d');
+                })
+                .catch(() => {
+                    clearAutoFilledFields();
+                    setLookupStatus('No student found for this index number.', '#b42333');
+                });
+        }
+
+        if (indexInput) {
+            indexInput.addEventListener('input', function() {
+                if (lookupTimer) {
+                    clearTimeout(lookupTimer);
+                }
+                lookupTimer = setTimeout(function() {
+                    lookupStudent(false);
+                }, 300);
+            });
+
+            indexInput.addEventListener('blur', function() {
+                lookupStudent(true);
+            });
+
+            indexInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    lookupStudent(true);
+                }
+            });
+        }
     </script>
 </body>
 </html>
-

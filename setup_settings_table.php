@@ -20,7 +20,7 @@ try {
         'annual_dues_amount' => '100.00',
         'payment_modes' => 'Cash,Mobile Money,Bank Transfer',
         'department_name' => 'Information Technology Education',
-        'institution_name' => 'AAMUSTED'
+        'institution_name' => 'USTED'
     ];
 
     $stmt = $pdo->prepare("INSERT IGNORE INTO system_settings (setting_key, setting_value) VALUES (?, ?)");

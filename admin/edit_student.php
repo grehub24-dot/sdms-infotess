@@ -84,6 +84,13 @@ if (!$student) {
     <title>Edit Student - Admin</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .upload-file-name {
+            margin-top: 8px;
+            font-size: 0.82rem;
+            color: #4b5563;
+        }
+    </style>
 </head>
 <body>
     <div class="dashboard-container">
@@ -126,10 +133,11 @@ if (!$student) {
                     <input type="hidden" name="current_picture" value="<?php echo $student['profile_picture']; ?>">
                     
                     <div style="grid-column: span 2; text-align: center; margin-bottom: 10px;">
-                        <img src="../<?php echo $student['profile_picture'] ?? 'images/user-placeholder.png'; ?>" alt="Current Profile" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd; margin-bottom: 10px;">
+                        <img id="editStudentPreview" src="../<?php echo $student['profile_picture'] ?? 'images/aamusted.jpg'; ?>" alt="Current Profile" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd; margin-bottom: 10px;">
                         <br>
                         <label>Update Profile Picture</label><br>
-                        <input type="file" name="profile_picture" class="form-control" accept="image/*">
+                        <input type="file" name="profile_picture" id="editStudentUpload" class="form-control" accept="image/*">
+                        <div id="editStudentUploadName" class="upload-file-name">No image selected</div>
                     </div>
 
                     <div class="form-group">
@@ -217,5 +225,38 @@ if (!$student) {
             </div>
         </main>
     </div>
+    <script>
+        const editStudentUpload = document.getElementById('editStudentUpload');
+        const editStudentPreview = document.getElementById('editStudentPreview');
+        const editStudentUploadName = document.getElementById('editStudentUploadName');
+
+        if (editStudentUpload && editStudentPreview && editStudentUploadName) {
+            editStudentUpload.addEventListener('change', function() {
+                const file = this.files && this.files[0] ? this.files[0] : null;
+                const defaultSrc = "../<?php echo $student['profile_picture'] ?? 'images/aamusted.jpg'; ?>";
+
+                if (!file) {
+                    editStudentPreview.src = defaultSrc;
+                    editStudentUploadName.textContent = 'No image selected';
+                    return;
+                }
+
+                editStudentUploadName.textContent = file.name;
+
+                if (!file.type.startsWith('image/')) {
+                    editStudentPreview.src = defaultSrc;
+                    editStudentUploadName.textContent = 'Please select an image file';
+                    this.value = '';
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    editStudentPreview.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    </script>
 </body>
 </html>

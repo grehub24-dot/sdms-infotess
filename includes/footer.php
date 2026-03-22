@@ -4,10 +4,10 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>About INFOTESS</h3>
-                    <p>The Information Technology Students’ Society (INFOTESS) of AAMUSTED is dedicated to promoting technology education and student welfare.</p>
+                    <p>The Information Technology Students’ Society (INFOTESS) of USTED is dedicated to promoting technology education and student welfare.</p>
                 </div>
                 <div class="footer-section">
-                    <?php $base_url = '/Infotess/'; ?>
+                    <?php $base_url = getBasePath(); ?>
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="<?php echo $base_url; ?>index.php">Home</a></li>
@@ -18,7 +18,7 @@
                 </div>
                 <div class="footer-section">
                     <h3>Contact Us</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> AAMUSTED, Kumasi Campus</p>
+                    <p><i class="fas fa-map-marker-alt"></i> USTED, Kumasi Campus</p>
                     <p><i class="fas fa-envelope"></i> info@infotess.org</p>
                     <p><i class="fas fa-phone"></i> +233 123 456 789</p>
                 </div>
