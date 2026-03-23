@@ -198,7 +198,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <div class="alert alert-danger"><?php echo $error; ?></div>
         <?php endif; ?>
 
-        <form action="register.php" method="POST" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+        <form action="register.php" method="POST" class="grid-form">
             <input type="hidden" name="action" value="register">
             
             <div class="form-group">
