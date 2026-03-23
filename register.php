@@ -217,7 +217,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 <label>Phone Number</label>
                 <input type="text" name="phone_number" class="form-control" required>
             </div>
-            <div class="form-group" style="grid-column: span 2;">
+            <div class="form-group full-width">
                 <label>Programme / Department</label>
                 <select name="department" class="form-control" required>
                     <option value="">-- Select Programme --</option>
@@ -297,11 +297,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 </select>
             </div>
             
-            <div style="grid-column: span 2; text-align: center; margin-top: 20px;">
+            <div class="form-group full-width" style="text-align: center; margin-top: 20px;">
                 <button type="submit" class="btn-primary" style="width: 100%; max-width: 300px; padding: 15px;">Register Now</button>
             </div>
             
-            <div style="grid-column: span 2; text-align: center; margin-top: 10px;">
+            <div class="form-group full-width" style="text-align: center; margin-top: 10px;">
                 <p>Already have an account? <a href="login.php">Login here</a></p>
             </div>
         </form>

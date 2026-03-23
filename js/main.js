@@ -9,6 +9,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Mobile Dropdown Toggle
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => {
+        const dropbtn = dropdown.querySelector('.dropbtn');
+        if (dropbtn) {
+            dropbtn.addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault(); // Prevent default link behavior
+                    dropdown.classList.toggle('active');
+                    
+                    // Close other dropdowns
+                    dropdowns.forEach(other => {
+                        if (other !== dropdown) {
+                            other.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }
+    });
+
     // Auto-dismiss alerts
     const alerts = document.querySelectorAll('.alert');
     if (alerts.length > 0) {

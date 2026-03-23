@@ -247,17 +247,9 @@ ul {
 }
 
 /* Forms */
-.form-container {
-    max-width: 500px;
-    margin: 50px auto;
-    background: var(--white);
-    padding: 40px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
 .form-group {
     margin-bottom: 20px;
+    width: 100%;
 }
 
 .form-group label {
@@ -272,12 +264,30 @@ ul {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
+    box-sizing: border-box; /* Ensure padding doesn't cause overflow */
 }
 
 .grid-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+    width: 100%; /* Ensure grid respects container width */
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-container {
+    max-width: 500px;
+    margin: 50px auto;
+    background: var(--white);
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-sizing: border-box;
+    overflow: hidden; /* Prevent content from breaking out */
+    width: 100%;
 }
 
 .btn-submit {
@@ -538,11 +548,11 @@ ul {
         position: static;
         box-shadow: none;
         padding-left: 20px;
-        display: block; /* Show dropdowns by default on mobile for better UX */
+        display: none; /* Hide by default on mobile */
     }
 
-    .dropdown:hover .dropdown-content {
-        display: block;
+    .dropdown.active .dropdown-content {
+        display: block; /* Show when active class is added via JS */
     }
 
     .hero h1 {
@@ -560,12 +570,22 @@ ul {
     .sidebar {
         width: 100%;
         padding-top: 0;
+        background: var(--primary-color);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
     .sidebar-menu {
         display: flex;
         overflow-x: auto;
-        padding: 10px 0;
+        padding: 10px 15px;
+        gap: 10px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
+    }
+
+    .sidebar-menu::-webkit-scrollbar {
+        display: none; /* Chrome/Safari/Webkit */
     }
 
     .sidebar-menu li a {
@@ -593,11 +613,14 @@ ul {
 
     .grid-form {
         grid-template-columns: 1fr !important;
+        gap: 15px; /* Reduce gap on mobile */
     }
 
     .form-container {
         padding: 20px;
         margin: 20px auto;
+        width: 100%;
+        max-width: 100%; /* Take full width minus padding */
     }
 }
 
