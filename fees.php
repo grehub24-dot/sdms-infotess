@@ -12,25 +12,23 @@ $current_year = $settings['current_academic_year'] ?? '2025/2026';
 $required_dues = number_format((float)($settings['annual_dues_amount'] ?? 100.00), 2);
 ?>
 
-<div class="hero" style="height: 40vh; background: linear-gradient(rgba(0,51,102,0.8), rgba(0,51,102,0.8)), url('images/aamusted.jpg') center/cover;">
+<section class="page-hero">
     <h1>Fees & Payment Schedule</h1>
     <p>Official guide for Department of IT Education students</p>
-</div>
+</section>
 
-<div class="section">
+<section class="page-shell">
     <div class="container">
         
-        <!-- Navigation Tabs -->
-        <div class="tabs" style="display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid #eee; overflow-x: auto;">
-            <button class="tab-btn active" onclick="openTab(event, 'school-fees')" style="padding: 10px 20px; background: none; border: none; font-weight: bold; color: var(--primary-color); border-bottom: 3px solid var(--primary-color); cursor: pointer; white-space: nowrap;">School Fees</button>
-            <button class="tab-btn" onclick="openTab(event, 'infotess-dues')" style="padding: 10px 20px; background: none; border: none; font-weight: bold; color: #666; cursor: pointer; white-space: nowrap;">INFOTESS Dues</button>
-            <button class="tab-btn" onclick="openTab(event, 'payment-guide')" style="padding: 10px 20px; background: none; border: none; font-weight: bold; color: #666; cursor: pointer; white-space: nowrap;">How to Pay</button>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'school-fees')">School Fees</button>
+            <button class="tab-btn" onclick="openTab(event, 'infotess-dues')">INFOTESS Dues</button>
+            <button class="tab-btn" onclick="openTab(event, 'payment-guide')">How to Pay</button>
         </div>
 
-        <!-- School Fees Tab -->
         <div id="school-fees" class="tab-content" style="display: block;">
-            <h2 class="section-title" style="text-align: left;">Faculty of Applied Sciences and Mathematics Education (FASME)</h2>
-            <div class="alert alert-info" style="background: #e3f2fd; color: #0c5460; border: 1px solid #bee5eb; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+            <h2 class="section-title tab-title">Faculty of Applied Sciences and Mathematics Education (FASME)</h2>
+            <div class="info-banner">
                 <i class="fas fa-info-circle"></i> Note: These are the provisional fees for the 2024/2025 Academic Year (Regular & Part-Time).
             </div>
 
@@ -79,11 +77,11 @@ $required_dues = number_format((float)($settings['annual_dues_amount'] ?? 100.00
                 </table>
             </div>
 
-            <div style="background: #fff3cd; color: #856404; padding: 15px; border-radius: 5px; border: 1px solid #ffeeba;">
+            <div class="notice-banner">
                 <strong>Included Charges:</strong> SRC Dues, Examination Fees, Medical Exams, Sports, ICT. (Note: INFOTESS dues are paid separately).
             </div>
             
-            <h3 class="section-title" style="text-align: left; margin-top: 40px;">Postgraduate Programmes</h3>
+            <h3 class="section-title tab-title" style="margin-top: 40px;">Postgraduate Programmes</h3>
             <div class="table-responsive">
                 <table class="table" style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
                     <thead>
@@ -114,9 +112,8 @@ $required_dues = number_format((float)($settings['annual_dues_amount'] ?? 100.00
             </div>
         </div>
 
-        <!-- INFOTESS Dues Tab -->
         <div id="infotess-dues" class="tab-content" style="display: none;">
-            <h2 class="section-title" style="text-align: left;">INFOTESS Association Dues</h2>
+            <h2 class="section-title tab-title">INFOTESS Association Dues</h2>
             <div class="card" style="max-width: 600px; margin: 0 auto; text-align: center; border-top: 5px solid var(--secondary-color);">
                 <div class="card-content">
                     <h3 style="color: var(--primary-color);"><?php echo htmlspecialchars($current_year); ?> Academic Year</h3>
@@ -134,7 +131,6 @@ $required_dues = number_format((float)($settings['annual_dues_amount'] ?? 100.00
             </div>
         </div>
 
-        <!-- Payment Guide Tab -->
         <div id="payment-guide" class="tab-content" style="display: none;">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
                 
@@ -182,9 +178,8 @@ $required_dues = number_format((float)($settings['annual_dues_amount'] ?? 100.00
 
             </div>
 
-            <!-- Agents Section -->
             <div style="margin-top: 40px;">
-                <h3 style="border-bottom: 2px solid #eee; padding-bottom: 10px;">Approved Collection Agents/Outlets</h3>
+                <h3 class="section-heading-line">Approved Collection Agents/Outlets</h3>
                 <p>The following campus agents are authorized to assist with Transflow payments:</p>
                 <table class="table" style="width: 100%; margin-top: 15px;">
                     <thead>
@@ -216,7 +211,7 @@ $required_dues = number_format((float)($settings['annual_dues_amount'] ?? 100.00
         </div>
 
     </div>
-</div>
+</section>
 
 <script>
 function openTab(evt, tabName) {
@@ -227,13 +222,9 @@ function openTab(evt, tabName) {
     }
     tablinks = document.getElementsByClassName("tab-btn");
     for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].style.color = "#666";
-        tablinks[i].style.borderBottom = "none";
         tablinks[i].classList.remove("active");
     }
     document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.style.color = "var(--primary-color)";
-    evt.currentTarget.style.borderBottom = "3px solid var(--primary-color)";
     evt.currentTarget.classList.add("active");
 }
 </script>

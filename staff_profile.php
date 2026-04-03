@@ -87,42 +87,42 @@ $name = isset($_GET['name']) ? urldecode($_GET['name']) : '';
 $staff = isset($staff_members[$name]) ? $staff_members[$name] : null;
 
 if (!$staff) {
-    echo '<div class="container" style="padding: 100px 0; text-align: center;"><h2>Staff Member Not Found</h2><a href="department.php" class="btn-primary">Back to Department</a></div>';
+    echo '<section class="page-shell"><div class="container"><div class="card empty-state"><h2>Staff Member Not Found</h2><a href="department.php" class="btn-primary">Back to Department</a></div></div></section>';
     require_once 'includes/footer.php';
     exit;
 }
 ?>
 
-<div class="section" style="background: var(--light-bg);">
+<section class="page-shell">
     <div class="container">
-        <a href="department.php" style="display: inline-block; margin-bottom: 20px; color: var(--primary-color); font-weight: bold;">&larr; Back to Department</a>
+        <a href="department.php" class="back-link">&larr; Back to Department</a>
         
-        <div class="card" style="display: flex; flex-direction: column; md:flex-row; overflow: hidden;">
+        <div class="card" style="overflow: hidden;">
             <div style="display: flex; flex-wrap: wrap;">
                 <div style="flex: 1; min-width: 300px; max-width: 400px;">
                     <img src="<?php echo $staff['image']; ?>" alt="<?php echo htmlspecialchars($name); ?>" style="width: 100%; height: 100%; object-fit: cover; min-height: 400px;">
                 </div>
                 <div style="flex: 2; padding: 40px; min-width: 300px;">
-                    <h1 style="color: var(--primary-color); margin-bottom: 10px;"><?php echo htmlspecialchars($name); ?></h1>
-                    <h3 style="color: var(--secondary-color); margin-bottom: 20px;"><?php echo htmlspecialchars($staff['role']); ?></h3>
+                    <h1 class="title-left"><?php echo htmlspecialchars($name); ?></h1>
+                    <h3 class="role-text"><?php echo htmlspecialchars($staff['role']); ?></h3>
                     
-                    <div style="margin-bottom: 30px;">
-                        <h4 style="border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">Biography</h4>
-                        <p style="line-height: 1.8; color: #555;"><?php echo $staff['bio']; ?></p>
+                    <div class="soft-note">
+                        <h4 class="section-heading-line">Biography</h4>
+                        <p class="muted"><?php echo $staff['bio']; ?></p>
                     </div>
 
-                    <div style="margin-bottom: 30px;">
-                        <h4 style="border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">Contact Information</h4>
-                        <p><i class="fas fa-envelope" style="width: 25px; color: var(--primary-color);"></i> <a href="mailto:<?php echo $staff['email']; ?>"><?php echo $staff['email']; ?></a></p>
-                        <p><i class="fas fa-map-marker-alt" style="width: 25px; color: var(--primary-color);"></i> Department of IT Education, USTED</p>
+                    <div class="soft-note">
+                        <h4 class="section-heading-line">Contact Information</h4>
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:<?php echo $staff['email']; ?>"><?php echo $staff['email']; ?></a></p>
+                        <p><i class="fas fa-map-marker-alt"></i> Department of IT Education, USTED</p>
                     </div>
 
                     <?php if (!empty($staff['research'])): ?>
                     <div>
-                        <h4 style="border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">Research Interests</h4>
-                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <h4 class="section-heading-line">Research Interests</h4>
+                        <div class="chip-row">
                             <?php foreach ($staff['research'] as $interest): ?>
-                                <span style="background: #e9ecef; padding: 5px 15px; border-radius: 20px; font-size: 0.9rem; color: #495057;"><?php echo htmlspecialchars($interest); ?></span>
+                                <span class="chip"><?php echo htmlspecialchars($interest); ?></span>
                             <?php endforeach; ?>
                         </div>
                     </div>
@@ -131,6 +131,6 @@ if (!$staff) {
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <?php require_once 'includes/footer.php'; ?>

@@ -21,21 +21,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<div class="hero" style="height: 40vh;">
+<section class="page-hero">
     <h1>Contact Us</h1>
     <p>We'd love to hear from you. Get in touch with our team.</p>
-</div>
+</section>
 
-<div class="section">
+<section class="page-shell">
     <div class="container">
         <?php if ($message): ?>
             <div class="alert alert-success"><?php echo $message; ?></div>
         <?php endif; ?>
         
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
-            <div class="card">
-                <h3>Send us a Message</h3>
-                <form method="POST" action="" style="margin-top: 20px;">
+        <div class="contact-grid">
+            <div class="content-card">
+                <h3 class="title-left">Send us a Message</h3>
+                <form method="POST" action="">
                     <div class="form-group">
                         <label for="name">Full Name</label>
                         <input type="text" id="name" name="name" class="form-control" required>
@@ -56,22 +56,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </form>
             </div>
             
-            <div class="card">
-                <h3>Contact Information</h3>
-                <div style="margin-top: 20px;">
+            <div class="content-card">
+                <h3 class="title-left">Contact Information</h3>
+                <div>
                     <p><i class="fas fa-map-marker-alt"></i> <strong>Location:</strong><br>
                     Department of Information Technology Education (DITE)<br>
                     Faculty of Applied Sciences and Mathematics Education (FASME)<br>
                     USTED, Kumasi Campus</p>
                     
-                    <p style="margin-top: 20px;"><i class="fas fa-phone"></i> <strong>Phone:</strong><br>
+                    <p class="soft-note"><i class="fas fa-phone"></i> <strong>Phone:</strong><br>
                     +233 24 091 8031</p>
                     
-                    <p style="margin-top: 20px;"><i class="fas fa-envelope"></i> <strong>Email:</strong><br>
+                    <p class="soft-note"><i class="fas fa-envelope"></i> <strong>Email:</strong><br>
                     info@infotess.org</p>
                     
-                    <div style="margin-top: 30px;">
-                        <h3>Office Hours</h3>
+                    <div class="soft-note">
+                        <h3 class="title-left">Office Hours</h3>
                         <p>Monday - Friday: 8:00 AM - 5:00 PM<br>
                         Saturday & Sunday: Closed</p>
                     </div>
@@ -79,6 +79,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <?php require_once 'includes/footer.php'; ?>

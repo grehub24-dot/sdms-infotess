@@ -23,22 +23,25 @@ $staff_members = [
 ];
 ?>
 
-<div class="container" style="padding: 40px 0;">
+<section class="page-hero">
     <h1>Department Overview</h1>
-    
-    <!-- Department Content -->
-    <div class="department-content" style="margin-bottom: 50px;">
+    <p>Learn about the Department of Information Technology Education, its mission, and its faculty leadership.</p>
+</section>
+
+<section class="page-shell">
+    <div class="container">
+    <div class="content-card" style="margin-bottom: 34px;">
         <?php if ($overview): ?>
-            <?php echo $overview; ?>
+            <div class="department-content">
+                <?php echo $overview; ?>
+            </div>
         <?php else: ?>
             <p>The Department of Information Technology Education (DITE) is a leading department in the Faculty of Applied Sciences and Mathematics Education (FASME) at USTED.</p>
             <p>We are dedicated to training competent teachers and professionals in Information Technology who can contribute meaningfully to national development.</p>
-            
-            <h3>Our Mission</h3>
+            <h3 class="title-left">Our Mission</h3>
             <p>To provide high-quality education in Information Technology, fostering innovation, research, and community service.</p>
-            
-            <h3>Programs Offered</h3>
-            <ul>
+            <h3 class="title-left">Programs Offered</h3>
+            <ul class="list-styled">
                 <li>B.Sc. Information Technology Education</li>
                 <li>Diploma in Information Technology</li>
                 <li>M.Phil. Information Technology etc</li>
@@ -46,19 +49,19 @@ $staff_members = [
         <?php endif; ?>
     </div>
 
-    <!-- Faculty & Staff Section -->
     <h2 class="section-title">Meet Our Faculty & Staff</h2>
     <div class="card-grid">
         <?php foreach ($staff_members as $staff): ?>
-            <a href="staff_profile.php?name=<?php echo urlencode($staff['name']); ?>" class="card" style="text-align: center; text-decoration: none; color: inherit; display: block;">
-                <img src="<?php echo $staff['image']; ?>" alt="<?php echo htmlspecialchars($staff['name']); ?>" style="height: 250px; object-fit: cover; width: 100%;">
+            <a href="staff_profile.php?name=<?php echo urlencode($staff['name']); ?>" class="card" style="text-align: center; display: block;">
+                <img src="<?php echo $staff['image']; ?>" alt="<?php echo htmlspecialchars($staff['name']); ?>" style="height: 250px;">
                 <div class="card-content">
-                    <h3 style="margin-bottom: 5px;"><?php echo htmlspecialchars($staff['name']); ?></h3>
-                    <p style="color: var(--secondary-color); font-weight: bold;"><?php echo htmlspecialchars($staff['role']); ?></p>
+                    <h3 class="card-title"><?php echo htmlspecialchars($staff['name']); ?></h3>
+                    <p class="role-text"><?php echo htmlspecialchars($staff['role']); ?></p>
                 </div>
             </a>
         <?php endforeach; ?>
     </div>
 </div>
+</section>
 
 <?php require_once 'includes/footer.php'; ?>

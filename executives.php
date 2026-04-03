@@ -132,32 +132,32 @@ if (!empty($randomPhotos)) {
 */
 ?>
 
-<div class="hero" style="height: 50vh;">
+<section class="page-hero">
     <h1>Our Leadership</h1>
     <p>Meet the executives serving the 2025/2026 administration.</p>
-</div>
+</section>
 
-<div class="section">
+<section class="page-shell">
     <div class="container">
         <div class="card-grid">
             <?php foreach ($executives as $exec): ?>
             <div class="card" style="text-align: center;">
-                <div style="padding: 20px;">
-                    <img src="<?php echo htmlspecialchars($exec['image_url'] ?: 'images/aamusted.jpg'); ?>" alt="<?php echo htmlspecialchars($exec['full_name']); ?>" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover;">
+                <div class="profile-ring-wrap">
+                    <img src="<?php echo htmlspecialchars($exec['image_url'] ?: 'images/aamusted.jpg'); ?>" alt="<?php echo htmlspecialchars($exec['full_name']); ?>" class="profile-ring">
                 </div>
                 <div class="card-content">
                     <h3 class="card-title"><?php echo htmlspecialchars($exec['full_name']); ?></h3>
-                    <p style="color: var(--secondary-color); font-weight: bold;"><?php echo htmlspecialchars($exec['position']); ?></p>
-                    <p style="margin: 10px 0;"><?php echo htmlspecialchars($exec['bio'] ?? ''); ?></p>
-                    <div style="margin-top: 15px;">
+                    <p class="role-text"><?php echo htmlspecialchars($exec['position']); ?></p>
+                    <p class="soft-note"><?php echo htmlspecialchars($exec['bio'] ?? ''); ?></p>
+                    <div class="social-row">
                         <?php if (!empty($exec['email'])): ?>
-                        <a href="mailto:<?php echo htmlspecialchars($exec['email']); ?>" style="color: var(--primary-color); margin: 0 10px;"><i class="fas fa-envelope"></i></a>
+                        <a href="mailto:<?php echo htmlspecialchars($exec['email']); ?>"><i class="fas fa-envelope"></i></a>
                         <?php endif; ?>
                         <?php if (!empty($exec['linkedin_url'])): ?>
-                        <a href="<?php echo htmlspecialchars($exec['linkedin_url']); ?>" style="color: var(--primary-color); margin: 0 10px;"><i class="fab fa-linkedin"></i></a>
+                        <a href="<?php echo htmlspecialchars($exec['linkedin_url']); ?>"><i class="fab fa-linkedin"></i></a>
                         <?php endif; ?>
                         <?php if (!empty($exec['github_url'])): ?>
-                        <a href="<?php echo htmlspecialchars($exec['github_url']); ?>" style="color: var(--primary-color); margin: 0 10px;"><i class="fab fa-github"></i></a>
+                        <a href="<?php echo htmlspecialchars($exec['github_url']); ?>"><i class="fab fa-github"></i></a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -165,6 +165,6 @@ if (!empty($randomPhotos)) {
             <?php endforeach; ?>
         </div>
     </div>
-</div>
+</section>
 
 <?php require_once 'includes/footer.php'; ?>
